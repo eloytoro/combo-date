@@ -13,7 +13,10 @@ angular.module('combo-date', [])
         link: function (scope, element, attrs, ngModel) {
             scope.years = [];
             var today = new Date();
-            for (var i = scope.min || 1900; i <= scope.max || today.getFullYear(); i++) {
+            var min = scope.min || 1900;
+            var max = scope.max || today.getFullYear();
+
+            for (var i = min; i <= max; i++) {
                 scope.years.unshift(i);
             }
 
