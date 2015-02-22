@@ -5,11 +5,15 @@ angular.module('combo-date', [])
         restrict: 'E',
         require: 'ngModel',
         replace: true,
+        scope: {
+            min: '=?',
+            max: '=?'
+        },
         templateUrl: 'combo-date/templates/combo-date.html',
         link: function (scope, element, attrs, ngModel) {
             scope.years = [];
             var today = new Date();
-            for (var i = 1900; i <= today.getFullYear(); i++) {
+            for (var i = scope.min || 1900; i <= scope.max || today.getFullYear(); i++) {
                 scope.years.unshift(i);
             }
 
@@ -58,6 +62,7 @@ angular.module('combo-date', [])
 
             ngModel.$render = function () {
                 var date = ngModel.$viewValue;
+                if (!date) return;
                 scope.selectedDay = date.getDate();
                 scope.selectedMonth = date.getMonth();
                 scope.selectedYear = date.getFullYear();
@@ -73,6 +78,7 @@ angular.module('combo-date', [])
             };
 
             ngModel.$formatters.push(function (dateString) {
+                if (!dateString) return undefined;
                 return new Date(moment(dateString).utc().format('YYYY-MM-DD'));
             });
         }
