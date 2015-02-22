@@ -111,4 +111,4 @@ angular.module('combo-date')
     '</div>',
     '</div>',
     ].join(''));
-});,
+});
