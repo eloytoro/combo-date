@@ -1,4 +1,4 @@
-angular.module('combo-date')
+angular.module('combo-date', [])
 
 .directive('comboDate', function () {
     return {
