@@ -76,6 +76,9 @@ angular.module('combo-date', [])
                 date.setDate(scope.selectedDay);
                 date.setMonth(scope.selectedMonth);
                 date.setYear(scope.selectedYear);
+                var valid = !isNaN(date.getTime());
+                ngModel.$setValidity('date', valid);
+                if (!valid) return;
                 ngModel.$setViewValue(date);
                 ngModel.$commitViewValue();
             };
