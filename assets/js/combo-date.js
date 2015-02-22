@@ -5,7 +5,7 @@ angular.module('combo-date', [])
         restrict: 'E',
         require: 'ngModel',
         transclude: true,
-        templateUrl: 'geekstrap/directives/combo-date/combo-date.html',
+        templateUrl: 'combo-date/templates/combo-date.html',
         link: function (scope, element, attrs, ngModel) {
             scope.years = [];
             var today = new Date();
