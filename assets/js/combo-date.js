@@ -4,7 +4,7 @@ angular.module('combo-date', [])
     return {
         restrict: 'E',
         require: 'ngModel',
-        transclude: true,
+        replace: true,
         templateUrl: 'combo-date/templates/combo-date.html',
         link: function (scope, element, attrs, ngModel) {
             scope.years = [];
@@ -82,8 +82,7 @@ angular.module('combo-date', [])
 .run(function ($templateCache) {
     $templateCache.put('combo-date/templates/combo-date.html', [
     '<div class="form-group combo-date">',
-    '<label class="col-sm-2" ng-transclude></label>',
-    '<div class="col-sm-10 text-left form-inline">',
+    '<div class="text-left form-inline">',
     '<div class="form-group">',
     '<select class="form-control"',
     'ng-options="day for day in days"',
