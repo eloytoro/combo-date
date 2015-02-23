@@ -85,7 +85,7 @@ angular.module('combo-date', [])
 
             ngModel.$formatters.push(function (dateString) {
                 if (!dateString) return undefined;
-                return new Date(moment(dateString).utc().format('YYYY-MM-DD'));
+                return new Date(moment(dateString).utc().format('YYYY-M-DD'));
             });
         }
     };
