@@ -72,7 +72,9 @@ angular.module('combo-date', [])
             };
 
             scope.pick = function () {
-                var date = new Date(ngModel.$viewValue);
+                var date = ngModel.$viewValue ?
+                    new Date(ngModel.$viewValue) :
+                    new Date();
                 date.setDate(scope.selectedDay);
                 date.setMonth(scope.selectedMonth);
                 date.setYear(scope.selectedYear);
