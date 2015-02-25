@@ -66,6 +66,9 @@ angular.module('combo-date', [])
             ngModel.$render = function () {
                 var date = ngModel.$viewValue;
                 if (!date) return;
+                if (!(date instanceof Date))
+                    date = new Date(date);
+                if (isNaN(date)) return;
                 scope.selectedDay = date.getDate();
                 scope.selectedMonth = date.getMonth();
                 scope.selectedYear = date.getFullYear();
@@ -73,17 +76,22 @@ angular.module('combo-date', [])
             };
 
             scope.pick = function () {
-                var date = ngModel.$viewValue ?
-                    new Date(ngModel.$viewValue) :
-                    new Date();
-                date.setDate(scope.selectedDay);
-                date.setMonth(scope.selectedMonth);
-                date.setYear(scope.selectedYear);
-                var valid = !isNaN(date.getTime());
-                ngModel.$setValidity('date', valid);
-                if (!valid) return;
-                ngModel.$setViewValue(date);
-                ngModel.$commitViewValue();
+                ngModel.$setValidity('date', (function() {
+                    if (scope.selectedDay === undefined || scope.selectedMonth === undefined || scope.selectedYear === undefined)
+                        return false;
+                    var date = new Date();
+                    date.setMonth(scope.selectedMonth);
+                    date.setYear(scope.selectedYear);
+                    if ((new Date(scope.selectedYear, scope.selectedMonth + 1, 0)).getDate() < scope.selectedDay)
+                        return false;
+                    date.setDate(scope.selectedDay);
+                    if (isNaN(date.getTime()))
+                        return false;
+                    ngModel.$setViewValue(date);
+                    ngModel.$commitViewValue();
+                    console.log(date);
+                    return true;
+                })());
             };
 
             ngModel.$formatters.push(function (dateString) {
