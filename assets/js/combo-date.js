@@ -69,6 +69,7 @@ angular.module('combo-date', [])
                 scope.selectedDay = date.getDate();
                 scope.selectedMonth = date.getMonth();
                 scope.selectedYear = date.getFullYear();
+                ngModel.$commitViewValue();
             };
 
             scope.pick = function () {
