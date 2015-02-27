@@ -6,7 +6,7 @@
     "etf <etoro@4geeks.com.ve>"
   ],
   "description": "angular combopicker date directive",
-  "main": "assets/js/combo-date.js",
+  "main": "dist/combo-date.js",
   "keywords": [
     "combo-date"
   ],
@@ -16,6 +16,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "gulpfile.js",
     "test",
     "tests"
   ],
