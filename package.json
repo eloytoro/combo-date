@@ -1,0 +1,23 @@
+{
+  "name": "combo-date",
+  "version": "1.0.0",
+  "description": "angular date picker",
+  "dependencies": {
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-angular-templatecache": "^1.5.0",
+    "merge-stream": "^0.1.7",
+    "gulp-concat": "^2.5.2",
+    "gulp": "^3.8.11"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eloytoro/combo-date"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eloytoro/combo-date/issues"
+  },
+  "homepage": "https://github.com/eloytoro/combo-date"
+}
