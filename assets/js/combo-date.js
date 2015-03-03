@@ -1,6 +1,16 @@
 angular.module('combo-date', [])
 
-.directive('comboDate', function () {
+.provider('ComboDate', function () {
+    var provider = this;
+
+    this.templateUrl = 'combo-date/templates/combo-date.html';
+
+    this.$get = function () {
+        this.templateUrl = provider.templateUrl;
+    };
+})
+
+.directive('comboDate', function (ComboDate) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -9,7 +19,7 @@ angular.module('combo-date', [])
             min: '=?',
             max: '=?'
         },
-        templateUrl: 'combo-date/templates/combo-date.html',
+        templateUrl: ComboDate.templateUrl,
         link: function (scope, element, attrs, ngModel) {
             scope.years = [];
             var today = new Date();
