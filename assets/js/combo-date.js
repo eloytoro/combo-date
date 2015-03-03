@@ -6,7 +6,9 @@ angular.module('combo-date', [])
     this.templateUrl = 'combo-date/templates/combo-date.html';
 
     this.$get = function () {
-        this.templateUrl = provider.templateUrl;
+        return {
+            templateUrl: provider.templateUrl
+        };
     };
 })
 
