@@ -79,12 +79,9 @@ angular.module('combo-date', [])
                 ngModel.$setValidity('date', (function() {
                     if (scope.selectedDay === undefined || scope.selectedMonth === undefined || scope.selectedYear === undefined)
                         return false;
-                    var date = new Date();
-                    date.setMonth(scope.selectedMonth);
-                    date.setYear(scope.selectedYear);
                     if ((new Date(scope.selectedYear, scope.selectedMonth + 1, 0)).getDate() < scope.selectedDay)
                         return false;
-                    date.setDate(scope.selectedDay);
+                    var date = new Date(Date.UTC(scope.selectedYear, scope.selectedMonth, scope.selectedDay));
                     if (isNaN(date.getTime()))
                         return false;
                     ngModel.$setViewValue(date);
