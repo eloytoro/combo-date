@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     annotate = require('gulp-ng-annotate'),
     uglify = require('gulp-uglify'),
+    rename = require('gulp-rename'),
     templateCache = require('gulp-angular-templatecache');
 
 var globs = {
@@ -23,6 +24,8 @@ gulp.task('build', function () {
         .pipe(filesort())
         .pipe(annotate())
         .pipe(concat('combo-date.js'))
+        .pipe(gulp.dest(globs.main))
         .pipe(uglify())
+        .pipe(rename('combo-date.min.js'))
         .pipe(gulp.dest(globs.main));
 });
