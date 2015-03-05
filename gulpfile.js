@@ -2,6 +2,8 @@ var gulp = require('gulp'),
     merge = require('merge-stream'),
     filesort = require('gulp-angular-filesort'),
     concat = require('gulp-concat'),
+    annotate = require('gulp-ng-annotate'),
+    uglify = require('gulp-uglify'),
     templateCache = require('gulp-angular-templatecache');
 
 var globs = {
@@ -19,6 +21,8 @@ gulp.task('build', function () {
     var js = gulp.src(globs.js);
     merge(templates, js)
         .pipe(filesort())
+        .pipe(annotate())
         .pipe(concat('combo-date.js'))
+        .pipe(uglify())
         .pipe(gulp.dest(globs.main));
 });
