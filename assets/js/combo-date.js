@@ -24,9 +24,8 @@ angular.module('combo-date', [])
         templateUrl: ComboDate.templateUrl,
         link: function (scope, element, attrs, ngModel) {
             scope.years = [];
-            var today = new Date();
             var min = scope.min || 1900;
-            var max = scope.max || today.getFullYear();
+            var max = scope.max || moment().year();
 
             for (var i = min; i <= max; i++) {
                 scope.years.unshift(i);
@@ -78,34 +77,42 @@ angular.module('combo-date', [])
             ngModel.$render = function () {
                 var date = ngModel.$viewValue;
                 if (!date) return;
-                if (!(date instanceof Date))
-                    date = new Date(date);
+                date = moment(date);
                 if (isNaN(date)) return;
-                scope.selectedDay = date.getDate();
-                scope.selectedMonth = date.getMonth();
-                scope.selectedYear = date.getFullYear();
+                scope.selectedDay = date.date();
+                scope.selectedMonth = date.month();
+                scope.selectedYear = date.year();
                 ngModel.$commitViewValue();
             };
 
             scope.pick = function () {
                 ngModel.$setValidity('date', (function() {
-                    if (scope.selectedDay === undefined || scope.selectedMonth === undefined || scope.selectedYear === undefined)
+                    if (scope.selectedDay === undefined ||
+                        scope.selectedMonth === undefined ||
+                        scope.selectedYear === undefined)
                         return false;
-                    if ((new Date(scope.selectedYear, scope.selectedMonth + 1, 0)).getDate() < scope.selectedDay)
+                    if (moment({
+                        year: selectedYear,
+                        month: selectedMonth,
+                        date: 0
+                    }).date() < scope.selectedDay)
                         return false;
-                    var date = new Date(Date.UTC(scope.selectedYear, scope.selectedMonth, scope.selectedDay));
-                    if (isNaN(date.getTime()))
+                    var date = moment({
+                        year: scope.selectedYear,
+                        month: scope.selectedMonth,
+                        day: scope.selectedDay
+                    });
+                    if (isNaN(date.valueOf()))
                         return false;
                     ngModel.$setViewValue(date);
                     ngModel.$commitViewValue();
-                    console.log(date);
                     return true;
                 })());
             };
 
             ngModel.$formatters.push(function (dateString) {
                 if (!dateString) return undefined;
-                return new Date(moment(dateString).utc().format('YYYY-M-DD'));
+                return moment(dateString);
             });
         }
     };
