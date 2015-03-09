@@ -92,8 +92,8 @@ angular.module('combo-date', [])
                         scope.selectedYear === undefined)
                         return false;
                     if (moment({
-                        year: selectedYear,
-                        month: selectedMonth,
+                        year: scope.selectedYear,
+                        month: scope.selectedMonth,
                         date: 0
                     }).date() < scope.selectedDay)
                         return false;
