@@ -77,7 +77,7 @@ angular.module('combo-date', [])
             ngModel.$render = function () {
                 var date = ngModel.$viewValue;
                 if (!date) return;
-                date = moment(date);
+                date = moment(date).utc();
                 if (isNaN(date)) return;
                 scope.selectedDay = date.date();
                 scope.selectedMonth = date.month();
@@ -101,7 +101,7 @@ angular.module('combo-date', [])
                         year: scope.selectedYear,
                         month: scope.selectedMonth,
                         day: scope.selectedDay
-                    });
+                    }).utc();
                     if (isNaN(date.valueOf()))
                         return false;
                     ngModel.$setViewValue(date);
@@ -112,7 +112,7 @@ angular.module('combo-date', [])
 
             ngModel.$formatters.push(function (dateString) {
                 if (!dateString) return undefined;
-                return moment(dateString);
+                return moment(dateString).utc();
             });
         }
     };
