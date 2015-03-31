@@ -5,9 +5,37 @@ angular.module('combo-date', [])
 
     this.templateUrl = 'combo-date/templates/combo-date.html';
 
+    this.months = [
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
+    ];
+
+    this.labels = {
+        day: 'Día',
+        month: 'Mes',
+        year: 'Año'
+    };
+
     this.$get = function () {
         return {
-            templateUrl: provider.templateUrl
+            templateUrl: provider.templateUrl,
+            months: provider.months.map(function (month, index) {
+                return {
+                    label: month,
+                    index: index
+                };
+            }),
+            labels: provider.labels
         };
     };
 })
@@ -31,43 +59,9 @@ angular.module('combo-date', [])
                 scope.years.unshift(i);
             }
 
-            scope.months = [{
-                label: 'Enero',
-                index: 0
-            }, {
-                label: 'Febrero',
-                index: 1
-            }, {
-                label: 'Marzo',
-                index: 2
-            }, {
-                label: 'Abril',
-                index: 3
-            }, {
-                label: 'Mayo',
-                index: 4
-            }, {
-                label: 'Junio',
-                index: 5
-            }, {
-                label: 'Julio',
-                index: 6
-            }, {
-                label: 'Agosto',
-                index: 7
-            }, {
-                label: 'Septiembre',
-                index: 8
-            }, {
-                label: 'Octubre',
-                index: 9
-            }, {
-                label: 'Noviembre',
-                index: 10
-            }, {
-                label: 'Diciembre',
-                index: 11
-            }];
+            scope.labels = ComboDate.labels;
+
+            scope.months = ComboDate.months;
 
             scope.days = [];
             for (var i = 1; i <= 31; i++) {
@@ -91,12 +85,14 @@ angular.module('combo-date', [])
                         scope.selectedMonth === undefined ||
                         scope.selectedYear === undefined)
                         return false;
-                    if (moment({
+                    var maxDate = moment({
                         year: scope.selectedYear,
                         month: scope.selectedMonth + 1,
                         date: 0
-                    }).date() < scope.selectedDay)
-                        return false;
+                    }).date();
+                    if (maxDate < scope.selectedDay) {
+                        scope.selectedDay = maxDate;
+                    }
                     var date = moment({
                         year: scope.selectedYear,
                         month: scope.selectedMonth,
