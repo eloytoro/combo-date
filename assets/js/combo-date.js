@@ -71,7 +71,7 @@ angular.module('combo-date', [])
             ngModel.$render = function () {
                 var date = ngModel.$viewValue;
                 if (!date) return;
-                date = moment(date).utc();
+                date = moment(date);
                 if (isNaN(date)) return;
                 scope.selectedDay = date.date();
                 scope.selectedMonth = date.month();
@@ -81,9 +81,9 @@ angular.module('combo-date', [])
 
             scope.pick = function () {
                 ngModel.$setValidity('date', (function() {
-                    if (scope.selectedDay === undefined ||
-                        scope.selectedMonth === undefined ||
-                        scope.selectedYear === undefined)
+                    if (!scope.selectedDay ||
+                        !scope.selectedMonth ||
+                        !scope.selectedYear)
                         return false;
                     var maxDate = moment({
                         year: scope.selectedYear,
@@ -97,7 +97,7 @@ angular.module('combo-date', [])
                         year: scope.selectedYear,
                         month: scope.selectedMonth,
                         day: scope.selectedDay
-                    }).utc();
+                    });
                     if (isNaN(date.valueOf()))
                         return false;
                     ngModel.$setViewValue(date);
@@ -108,7 +108,7 @@ angular.module('combo-date', [])
 
             ngModel.$formatters.push(function (dateString) {
                 if (!dateString) return undefined;
-                return moment(dateString).utc();
+                return moment(dateString);
             });
         }
     };
