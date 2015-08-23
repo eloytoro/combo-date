@@ -81,9 +81,9 @@ angular.module('combo-date', [])
 
             scope.pick = function () {
                 ngModel.$setValidity('date', (function() {
-                    if (!scope.selectedDay ||
-                        !scope.selectedMonth ||
-                        !scope.selectedYear)
+                    if (scope.selectedDay   == null ||
+                        scope.selectedMonth == null ||
+                        scope.selectedYear  == null)
                         return false;
                     var maxDate = moment({
                         year: scope.selectedYear,
