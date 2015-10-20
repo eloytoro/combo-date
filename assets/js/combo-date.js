@@ -70,6 +70,7 @@ angular.module('combo-date', [])
 
             ngModel.$render = function () {
                 var date = ngModel.$viewValue;
+                ngModel.$setPristine();
                 if (!date) return;
                 date = moment(date);
                 if (isNaN(date)) return;
@@ -80,7 +81,8 @@ angular.module('combo-date', [])
             };
 
             scope.pick = function () {
-                ngModel.$setValidity('date', (function() {
+                ngModel.$setDirty();
+                ngModel.$setValidity('format', (function() {
                     if (scope.selectedDay   == null ||
                         scope.selectedMonth == null ||
                         scope.selectedYear  == null)
